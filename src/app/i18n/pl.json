@@ -1,0 +1,10 @@
+{
+  "app": {
+    "name": "Recipe Hub",
+    "language": "Język"
+  },
+  "home": {
+    "title": "Znajdź coś dobrego do ugotowania",
+    "tagline": "Przepisy, które naprawdę zrobisz jeszcze dziś wieczorem."
+  }
+}

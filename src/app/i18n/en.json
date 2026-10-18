@@ -1,0 +1,10 @@
+{
+  "app": {
+    "name": "Recipe Hub",
+    "language": "Language"
+  },
+  "home": {
+    "title": "Find something good to cook",
+    "tagline": "Recipes you can actually make tonight."
+  }
+}
