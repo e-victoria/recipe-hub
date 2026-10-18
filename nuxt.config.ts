@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'Recipe Hub',
-      meta: [{ name: 'theme-color', content: '#fffaf5' }],
+      meta: [{ name: 'theme-color', content: '#ffffff' }],
       link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     },
   },
@@ -34,8 +34,8 @@ export default defineNuxtConfig({
     manifest: {
       name: 'Recipe Hub',
       short_name: 'Recipes',
-      theme_color: '#fffaf5',
-      background_color: '#fffaf5',
+      theme_color: '#ffffff',
+      background_color: '#ffffff',
       display: 'standalone',
       icons: [
         { src: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' },
