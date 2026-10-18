@@ -1,0 +1,5 @@
+{
+  "version": "v0.1.0",
+  "include": ["shared", "web"],
+  "targets": ["agents-md", "claude"]
+}
