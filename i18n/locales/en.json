@@ -6,5 +6,21 @@
   "home": {
     "title": "Find something good to cook",
     "tagline": "Recipes you can actually make tonight."
+  },
+  "nav": {
+    "recipes": "Recipes"
+  },
+  "recipes": {
+    "title": "Recipes",
+    "add": "Add a new recipe",
+    "empty": {
+      "title": "No recipes yet",
+      "hint": "Add your first recipe to start building your collection."
+    }
+  },
+  "recipeNew": {
+    "title": "New recipe",
+    "back": "Back to recipes",
+    "comingSoon": "The recipe form is coming soon."
   }
 }

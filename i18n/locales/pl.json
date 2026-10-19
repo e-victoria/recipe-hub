@@ -6,5 +6,21 @@
   "home": {
     "title": "Znajdź coś dobrego do ugotowania",
     "tagline": "Przepisy, które naprawdę zrobisz jeszcze dziś wieczorem."
+  },
+  "nav": {
+    "recipes": "Przepisy"
+  },
+  "recipes": {
+    "title": "Przepisy",
+    "add": "Dodaj nowy przepis",
+    "empty": {
+      "title": "Nie ma jeszcze przepisów",
+      "hint": "Dodaj pierwszy przepis, aby zacząć budować swoją kolekcję."
+    }
+  },
+  "recipeNew": {
+    "title": "Nowy przepis",
+    "back": "Wróć do przepisów",
+    "comingSoon": "Formularz przepisu pojawi się wkrótce."
   }
 }

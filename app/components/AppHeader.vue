@@ -6,6 +6,9 @@ const localePath = useLocalePath()
 <template>
   <header class="topbar">
     <NuxtLink class="brand" :to="localePath('/')">{{ t('app.name') }}</NuxtLink>
+    <nav class="nav">
+      <NuxtLink :to="localePath('/recipes')">{{ t('nav.recipes') }}</NuxtLink>
+    </nav>
     <label class="lang">
       <span class="visually-hidden">{{ t('app.language') }}</span>
       <select :value="locale" @change="setLocale(($event.target as HTMLSelectElement).value as typeof locale)">
@@ -30,6 +33,20 @@ const localePath = useLocalePath()
   font-size: 1.125rem;
   color: inherit;
   text-decoration: none;
+}
+
+.nav {
+  flex: 1;
+}
+
+.nav a {
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+.nav a.router-link-active {
+  color: inherit;
+  font-weight: 600;
 }
 
 .lang select {
