@@ -5,6 +5,13 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/i18n', '@vite-pwa/nuxt'],
   css: ['~/assets/main.css'],
 
+  runtimeConfig: {
+    public: {
+      // Override with NUXT_PUBLIC_API_BASE; the default is the local recipe-hub-api.
+      apiBase: 'http://localhost:8000',
+    },
+  },
+
   app: {
     head: {
       title: 'Recipe Hub',

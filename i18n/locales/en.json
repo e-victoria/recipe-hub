@@ -16,11 +16,41 @@
     "empty": {
       "title": "No recipes yet",
       "hint": "Add your first recipe to start building your collection."
+    },
+    "meta": {
+      "servings": "Servings: {value}",
+      "prep": "Prep: {value} min",
+      "cook": "Cook: {value} min"
+    },
+    "error": {
+      "title": "Could not load recipes",
+      "hint": "Check your connection and try again.",
+      "retry": "Try again"
     }
   },
   "recipeNew": {
     "title": "New recipe",
     "back": "Back to recipes",
-    "comingSoon": "The recipe form is coming soon."
+    "fields": {
+      "language": "Recipe language",
+      "title": "Title",
+      "description": "Description",
+      "servings": "Servings",
+      "prepMinutes": "Prep time (min)",
+      "cookMinutes": "Cook time (min)",
+      "ingredients": "Ingredients",
+      "steps": "Steps"
+    },
+    "hints": {
+      "language": "The language the recipe text is written in.",
+      "onePerLine": "One per line."
+    },
+    "save": "Save recipe",
+    "saving": "Saving…",
+    "cancel": "Cancel",
+    "error": {
+      "invalid": "Some fields are not valid. Check them and try again.",
+      "generic": "Could not save the recipe. Try again in a moment."
+    }
   }
 }

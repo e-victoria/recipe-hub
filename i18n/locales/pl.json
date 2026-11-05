@@ -16,11 +16,41 @@
     "empty": {
       "title": "Nie ma jeszcze przepisów",
       "hint": "Dodaj pierwszy przepis, aby zacząć budować swoją kolekcję."
+    },
+    "meta": {
+      "servings": "Porcje: {value}",
+      "prep": "Przygotowanie: {value} min",
+      "cook": "Gotowanie: {value} min"
+    },
+    "error": {
+      "title": "Nie udało się wczytać przepisów",
+      "hint": "Sprawdź połączenie i spróbuj ponownie.",
+      "retry": "Spróbuj ponownie"
     }
   },
   "recipeNew": {
     "title": "Nowy przepis",
     "back": "Wróć do przepisów",
-    "comingSoon": "Formularz przepisu pojawi się wkrótce."
+    "fields": {
+      "language": "Język przepisu",
+      "title": "Tytuł",
+      "description": "Opis",
+      "servings": "Porcje",
+      "prepMinutes": "Przygotowanie (min)",
+      "cookMinutes": "Gotowanie (min)",
+      "ingredients": "Składniki",
+      "steps": "Kroki"
+    },
+    "hints": {
+      "language": "Język, w którym napisany jest tekst przepisu.",
+      "onePerLine": "Po jednym w wierszu."
+    },
+    "save": "Zapisz przepis",
+    "saving": "Zapisywanie…",
+    "cancel": "Anuluj",
+    "error": {
+      "invalid": "Niektóre pola są nieprawidłowe. Sprawdź je i spróbuj ponownie.",
+      "generic": "Nie udało się zapisać przepisu. Spróbuj ponownie za chwilę."
+    }
   }
 }
