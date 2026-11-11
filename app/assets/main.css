@@ -1,46 +1,18 @@
 :root {
   --color-bg: #ffffff;
-  --color-surface: #f6f6f8;
-  --color-text: #000000;
-  --color-muted: #5c5c66;
-  --color-border: #e3e3e8;
-
-  --color-primary: #101585;
-  --color-primary-hover: #0b0f63;
-  --color-primary-soft: #ebecf8;
-  --color-on-primary: #ffffff;
-
-  --color-danger: #c42b1c;
-  --color-danger-hover: #a12216;
-  --color-danger-soft: #fdecea;
-  --color-on-danger: #ffffff;
-
-  --color-focus: #101585;
-  --radius: 6px;
-  color-scheme: light dark;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #0f0f12;
-    --color-surface: #1a1a1f;
-    --color-text: #f2f2f4;
-    --color-muted: #a3a3ad;
-    --color-border: #2e2e36;
-
-    /* #101585 is too dark to read on a dark background, so dark mode uses a lighter tint of it. */
-    --color-primary: #8e93f5;
-    --color-primary-hover: #a9adf8;
-    --color-primary-soft: #1d1f45;
-    --color-on-primary: #0b0d3d;
-
-    --color-danger: #f27166;
-    --color-danger-hover: #f58f86;
-    --color-danger-soft: #3a1714;
-    --color-on-danger: #2a0905;
-
-    --color-focus: #8e93f5;
-  }
+  --color-surface: #ffffff;
+  /* Quiet fill for image placeholders and hovered controls. */
+  --color-subtle: #f5f5f4;
+  --color-text: #141414;
+  --color-muted: #6b6b6b;
+  --color-border: #e7e7e5;
+  /* Monochrome on purpose: the food photos carry the colour. */
+  --color-accent: #141414;
+  --color-on-accent: #ffffff;
+  --color-danger: #b3261e;
+  --radius: 10px;
+  --radius-large: 14px;
+  color-scheme: light;
 }
 
 *,
@@ -52,7 +24,24 @@
 body {
   margin: 0;
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+  background: var(--color-bg);
   color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
 }
 
 a {
@@ -74,7 +63,141 @@ a {
 }
 
 .content {
-  max-width: 960px;
+  max-width: 1040px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1.25rem;
+}
+
+/* Shared building blocks, so every page gets the same buttons and form fields. */
+
+.page-title {
+  margin: 0;
+  font-size: clamp(1.625rem, 4vw, 2.125rem);
+  overflow-wrap: anywhere;
+}
+
+.back {
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+  text-decoration: none;
+}
+
+.back:hover {
+  color: var(--color-text);
+}
+
+.button {
+  display: inline-block;
+  padding: 0.6rem 1.15rem;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font: inherit;
+  font-weight: 500;
+  line-height: 1.4;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.15s ease, background-color 0.15s ease;
+}
+
+.button:hover {
+  opacity: 0.85;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.button.secondary {
+  border-color: var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+}
+
+.button.secondary:hover {
+  opacity: 1;
+  background: var(--color-subtle);
+}
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.field small {
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  background: var(--color-surface);
+  color: inherit;
+  transition: border-color 0.15s ease;
+}
+
+.field input:hover,
+.field select:hover,
+.field textarea:hover {
+  border-color: #c9c9c6;
+}
+
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible {
+  border-color: var(--color-text);
+  outline: 1px solid var(--color-text);
+  outline-offset: 0;
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.error {
+  margin: 0;
+  color: var(--color-danger);
+}
+
+/* Empty lists, missing pages and failed loads. */
+.state {
+  padding: 4rem 1rem;
+  text-align: center;
+}
+
+.state-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.state-hint {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.state .button {
+  margin-top: 1.25rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
 }

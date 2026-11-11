@@ -4,11 +4,38 @@
     "language": "Język"
   },
   "home": {
-    "title": "Znajdź coś dobrego do ugotowania",
-    "tagline": "Przepisy, które naprawdę zrobisz jeszcze dziś wieczorem."
+    "title": "Wszystkie ulubione przepisy w jednym miejscu",
+    "tagline": "Zapisuj przepisy z dowolnego źródła, sprawdzaj ich skład i planuj tydzień dla całej rodziny.",
+    "cta": {
+      "register": "Załóż konto",
+      "login": "Mam już konto",
+      "recipes": "Przejdź do moich przepisów"
+    },
+    "features": {
+      "title": "Co potrafi Recipe Hub",
+      "save": {
+        "title": "Zapisuj przepisy po swojemu",
+        "text": "Wpisz przepis ręcznie, wklej link lub skopiowany tekst albo poproś asystenta AI o wymyślenie czegoś nowego."
+      },
+      "nutrition": {
+        "title": "Wiedz, co masz na talerzu",
+        "text": "Kalorie, białko, tłuszcze, witaminy i minerały dla każdego przepisu. Gdy ich brakuje, są szacowane na podstawie składników."
+      },
+      "plan": {
+        "title": "Planujcie tydzień razem",
+        "text": "Układaj tygodniowe menu z myślą o każdym domowniku: jego upodobaniach, zapotrzebowaniu na kalorie i zdrowiu."
+      }
+    },
+    "closing": {
+      "title": "Gotowi do gotowania?",
+      "text": "Zacznij kolekcję od pierwszego przepisu. To zajmie minutę."
+    }
   },
   "nav": {
-    "recipes": "Przepisy"
+    "recipes": "Przepisy",
+    "login": "Zaloguj się",
+    "logout": "Wyloguj się",
+    "account": "Zalogowano jako {email}"
   },
   "recipes": {
     "title": "Przepisy",
@@ -82,6 +109,36 @@
     "error": {
       "invalid": "Niektóre pola są nieprawidłowe. Sprawdź je i spróbuj ponownie.",
       "generic": "Nie udało się zapisać przepisu. Spróbuj ponownie za chwilę."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Logowanie",
+      "submit": "Zaloguj się",
+      "submitting": "Logowanie…",
+      "switch": "Nie masz konta?",
+      "switchLink": "Załóż je"
+    },
+    "register": {
+      "title": "Załóż konto",
+      "submit": "Załóż konto",
+      "submitting": "Zakładanie konta…",
+      "switch": "Masz już konto?",
+      "switchLink": "Zaloguj się"
+    },
+    "fields": {
+      "email": "E-mail",
+      "password": "Hasło"
+    },
+    "hints": {
+      "password": "Co najmniej 8 znaków."
+    },
+    "error": {
+      "invalid": "Nieprawidłowy e-mail lub hasło.",
+      "taken": "Konto z tym adresem e-mail już istnieje.",
+      "invalidInput": "Sprawdź adres e-mail i użyj hasła o długości co najmniej 8 znaków.",
+      "tooMany": "Zbyt wiele prób. Odczekaj kilka minut i spróbuj ponownie.",
+      "generic": "Coś poszło nie tak. Spróbuj ponownie za chwilę."
     }
   }
 }

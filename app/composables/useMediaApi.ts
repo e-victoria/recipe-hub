@@ -13,7 +13,7 @@ async function imageSize(file: File) {
 
 // Returns a factory, so a page can get the API before it knows the recipe's slug.
 export function useMediaApi() {
-  const baseURL = useRuntimeConfig().public.apiBase
+  const baseURL = '/api'
 
   return (slug: string): MediaApi => ({
     start: (kind, file) => $fetch<MediaUpload>(`/recipes/${slug}/${kind}/uploads`, {

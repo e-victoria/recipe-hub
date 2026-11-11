@@ -9,11 +9,18 @@ Recipe Hub web app: Nuxt 4 (Vue 3), server-rendered, PWA, EN/RU/PL via `@nuxtjs/
 - Tests: `npm test` (Vitest, files in `test/`)
 - Production build: `npm run build`, then `node .output/server/index.mjs`
 
+## API and login
+
+- The browser never calls recipe-hub-api directly. Pages fetch `/api/...` on this site; `server/api/[...path].ts` forwards it to `NUXT_API_BASE` (server-only runtime config, default `http://localhost:8000`) with the user's token.
+- The token lives only in the `httpOnly` cookie `recipe-hub.session`, set by `server/api/auth/{login,register}.post.ts`. Page code never sees it; `useAuth()` exposes just the user.
+- `app/middleware/auth.global.ts` sends logged-out users to `/login?redirect=…`. Public pages are listed in `PUBLIC_PAGES` there; add a page to it only if it shows no user data.
+- After API changes, regenerate types with `npm run api:types` (needs the API running on port 8000).
+
 ## AI config
 
 Shared rules, skills and personas come from `recipe-hub-ai` (version pinned in `ai.json`). Don't edit the generated block below or `.claude/skills` / `.claude/agents` by hand; change them in `recipe-hub-ai` and run `python3 ../recipe-hub-ai/sync.py .`.
 
-<!-- recipe-hub-ai:begin v0.3.0 -- generated, edit in recipe-hub-ai and run sync -->
+<!-- recipe-hub-ai:begin v0.4.0 -- generated, edit in recipe-hub-ai and run sync -->
 
 ## Recipe Hub — shared rules
 
@@ -27,6 +34,7 @@ Recipe Hub is a trilingual (EN/RU/PL) recipe web app, with a native Swift iOS ap
 
 Recipe Hub is a personal hub of saved recipes, with nutrition data and family meal planning.
 
+- **Accounts**: each account belongs to one person, who logs in with email and password. Family members are profiles inside the account, not logins. Users only ever see their own data.
 - **Adding recipes**, three ways: fill in the "New recipe" form; paste a link or recipe text copied from elsewhere, which AI parses into the form; or ask the AI assistant to come up with a recipe.
 - **Managing recipes**: edit, delete, change portions, add comments. Edits are made by hand or with AI assistance.
 - **Nutrition**: every recipe has nutritional values (calories, fat, protein, vitamins, minerals, etc.). If a recipe lacks them, AI estimates them from the ingredient list.
@@ -54,6 +62,9 @@ Conventional Commits, title only: `type(scope): summary`. No body, no trailers, 
 - Translations live in `i18n/locales/{en,ru,pl}.json`. Use `t('key')` from `useI18n()`; never write UI text inline.
 - Links go through `useLocalePath()`, so `/`, `/ru` and `/pl` stay consistent.
 - Pages must render correctly on the server. Browser-only APIs (`window`, `localStorage`) go inside `onMounted` or `import.meta.client` guards.
+- Pages call the API through this site: `useFetch('/recipes', { baseURL: '/api' })`, never the API's own URL. The server proxy in `server/api/` adds the session token.
+- The session token lives only in an `httpOnly` cookie. App code never reads, stores or returns it, and nothing goes in `localStorage` that would sign someone in.
+- Every page needs a logged-in user unless it is listed in `PUBLIC_PAGES` in `app/middleware/auth.global.ts`. Redirect targets taken from the URL go through `safeRedirect`.
 - Styling: plain CSS with the custom properties in `app/assets/main.css`. Scoped styles per component. No UI framework without agreement.
 
 <!-- recipe-hub-ai:end -->

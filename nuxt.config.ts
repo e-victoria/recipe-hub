@@ -5,11 +5,17 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/i18n', '@vite-pwa/nuxt'],
   css: ['~/assets/main.css'],
 
+  routeRules: {
+    // Homepage photos and icons have stable names, so browsers may keep them for a day
+    // and refresh them in the background for a week.
+    '/images/**': { headers: { 'cache-control': 'public, max-age=86400, stale-while-revalidate=604800' } },
+    '/icons/**': { headers: { 'cache-control': 'public, max-age=86400, stale-while-revalidate=604800' } },
+  },
+
   runtimeConfig: {
-    public: {
-      // Override with NUXT_PUBLIC_API_BASE; the default is the local recipe-hub-api.
-      apiBase: 'http://localhost:8000',
-    },
+    // Server only: the browser calls /api on this site, which forwards to the API with the
+    // session token (server/api/[...path].ts). Override with NUXT_API_BASE.
+    apiBase: 'http://localhost:8000',
   },
 
   app: {
