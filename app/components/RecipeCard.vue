@@ -21,9 +21,10 @@ const meta = computed(() => recipeMeta(props.recipe))
       :width="recipe.cover.width ?? undefined"
       :height="recipe.cover.height ?? undefined"
       :loading="eager ? 'eager' : 'lazy'"
+      decoding="async"
     >
     <div v-else class="media placeholder" aria-hidden="true">
-      <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="32" cy="32" r="15" />
         <circle cx="32" cy="32" r="8.5" />
         <path d="M9 14v9a4 4 0 0 0 8 0v-9M13 14v36" />
@@ -49,17 +50,6 @@ const meta = computed(() => recipeMeta(props.recipe))
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow: hidden;
-  border: 1px solid var(--color-border);
-  border-radius: 18px;
-  background: var(--color-surface);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-}
-
-.card:hover {
-  transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
-  box-shadow: 0 16px 32px -20px rgb(43 33 24 / 45%);
 }
 
 .media {
@@ -67,32 +57,40 @@ const meta = computed(() => recipeMeta(props.recipe))
   width: 100%;
   height: auto;
   aspect-ratio: 4 / 3;
+  border-radius: var(--radius-large);
   object-fit: cover;
-  background: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface));
+  background: var(--color-subtle);
+  transition: opacity 0.15s ease;
+}
+
+.card:hover .media {
+  opacity: 0.88;
 }
 
 .placeholder {
   display: grid;
   place-items: center;
-  color: color-mix(in srgb, var(--color-accent) 55%, var(--color-surface));
+  color: #c4c4c0;
 }
 
 .placeholder svg {
-  width: 34%;
-  max-width: 6rem;
+  width: 26%;
+  max-width: 4.5rem;
 }
 
 .body {
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding: 1rem 1.15rem 1.15rem;
+  gap: 0.2rem;
+  padding: 0.8rem 0.125rem 0;
 }
 
 h2 {
-  margin: 0 0 0.35rem;
-  font-size: 1.125rem;
-  line-height: 1.3;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
   overflow-wrap: anywhere;
 }
 
@@ -106,7 +104,7 @@ h2 {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: inherit;
+  border-radius: var(--radius-large);
 }
 
 .link:focus-visible {
@@ -114,15 +112,16 @@ h2 {
 }
 
 .link:focus-visible::after {
-  outline: 2px solid var(--color-accent);
-  outline-offset: -2px;
+  outline: 2px solid var(--color-text);
+  outline-offset: 3px;
 }
 
 .description {
   display: -webkit-box;
-  margin: 0 0 0.9rem;
+  margin: 0;
   overflow: hidden;
   color: var(--color-muted);
+  font-size: 0.9375rem;
   line-height: 1.45;
   overflow-wrap: anywhere;
   -webkit-box-orient: vertical;
@@ -133,27 +132,15 @@ h2 {
 .meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
-  margin: auto 0 0;
+  margin: 0.2rem 0 0;
   padding: 0;
   list-style: none;
   color: var(--color-muted);
   font-size: 0.8125rem;
 }
 
-.meta li {
-  padding: 0.2rem 0.6rem;
-  border: 1px solid var(--color-border);
-  border-radius: 999px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .card {
-    transition: none;
-  }
-
-  .card:hover {
-    transform: none;
-  }
+.meta li + li::before {
+  content: '·';
+  margin: 0 0.4rem;
 }
 </style>

@@ -11,6 +11,7 @@ async function onLogout() {
 
 <template>
   <header class="topbar">
+    <div class="content bar">
     <NuxtLink class="brand" :to="localePath('/')">{{ t('app.name') }}</NuxtLink>
     <nav class="nav">
       <NuxtLink v-if="user" :to="localePath('/recipes')">{{ t('nav.recipes') }}</NuxtLink>
@@ -28,22 +29,27 @@ async function onLogout() {
         <option v-for="l in locales" :key="l.code" :value="l.code">{{ l.name }}</option>
       </select>
     </label>
+    </div>
   </header>
 </template>
 
 <style scoped>
 .topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--color-border);
 }
 
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  height: 3.5rem;
+  font-size: 0.9375rem;
+}
+
 .brand {
-  font-weight: 700;
-  font-size: 1.125rem;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
   color: inherit;
   text-decoration: none;
 }
@@ -57,15 +63,15 @@ async function onLogout() {
   text-decoration: none;
 }
 
+.nav a:hover,
 .nav a.router-link-active {
-  color: inherit;
-  font-weight: 600;
+  color: var(--color-text);
 }
 
 .account {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
   min-width: 0;
 }
 
@@ -83,23 +89,37 @@ async function onLogout() {
   background: none;
   color: inherit;
   font: inherit;
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
+  white-space: nowrap;
   cursor: pointer;
 }
 
-@media (max-width: 480px) {
-  .email {
-    display: none;
-  }
+.link:hover {
+  color: var(--color-muted);
 }
 
 .lang select {
-  font: inherit;
-  padding: 0.25rem 0.5rem;
-  border: 1px solid var(--color-border);
+  padding: 0.25rem 0.25rem;
+  border: 0;
   border-radius: 6px;
-  background: var(--color-surface);
-  color: inherit;
+  background: transparent;
+  color: var(--color-muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+.lang select:hover {
+  color: var(--color-text);
+}
+
+@media (max-width: 560px) {
+  .bar {
+    gap: 1rem;
+  }
+
+  .email {
+    display: none;
+  }
 }
 </style>

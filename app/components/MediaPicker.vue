@@ -57,42 +57,37 @@ function remove(index: number) {
   gap: 0.5rem;
 }
 
-.field {
-  display: grid;
-  gap: 0.35rem;
-  font-weight: 600;
-}
-
-.field small {
-  font-weight: 400;
-  color: var(--color-muted);
-}
-
 .field input {
-  width: 100%;
-  padding: 0.55rem 0.7rem;
+  padding: 0.45rem;
+  font-size: 0.9375rem;
+}
+
+.field input::file-selector-button {
+  margin-right: 0.75rem;
+  padding: 0.3rem 0.75rem;
   border: 1px solid var(--color-border);
-  border-radius: 8px;
-  font: inherit;
-  font-weight: 400;
-  background: transparent;
+  border-radius: 7px;
+  background: var(--color-surface);
   color: inherit;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 .rejected {
   margin: 0;
   padding: 0;
   list-style: none;
-  color: #b3261e;
+  color: var(--color-danger);
+  font-size: 0.9375rem;
   overflow-wrap: anywhere;
 }
 
 .files {
-  display: grid;
-  gap: 0.25rem;
   margin: 0;
   padding: 0;
   list-style: none;
+  font-size: 0.9375rem;
 }
 
 .files li {
@@ -100,9 +95,8 @@ function remove(index: number) {
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  padding: 0.25rem 0.25rem 0.25rem 0.7rem;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
+  padding: 0.15rem 0;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .file-name {

@@ -55,7 +55,7 @@ async function submit() {
 <template>
   <section class="recipe-new">
     <NuxtLink class="back" :to="localePath('/recipes')">← {{ t('recipeNew.back') }}</NuxtLink>
-    <h1>{{ t('recipeNew.title') }}</h1>
+    <h1 class="page-title">{{ t('recipeNew.title') }}</h1>
 
     <form class="form" @submit.prevent="submit">
       <label class="field">
@@ -124,83 +124,37 @@ async function submit() {
 
 <style scoped>
 .recipe-new {
-  padding: 2rem 0;
+  max-width: 36rem;
+  padding: 2rem 0 4rem;
 }
 
-.back {
-  color: var(--color-muted);
-  text-decoration: none;
-}
-
-.recipe-new h1 {
-  margin: 1rem 0 1.5rem;
-  font-size: clamp(1.5rem, 4vw, 2.25rem);
+.page-title {
+  margin: 1.25rem 0 2rem;
 }
 
 .form {
   display: grid;
-  gap: 1.25rem;
-  max-width: 640px;
-}
-
-.field {
-  display: grid;
-  gap: 0.35rem;
-  font-weight: 600;
-}
-
-.field small {
-  font-weight: 400;
-  color: var(--color-muted);
-}
-
-.field input,
-.field select,
-.field textarea {
-  width: 100%;
-  padding: 0.55rem 0.7rem;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  font: inherit;
-  font-weight: 400;
-  background: transparent;
-  color: inherit;
+  gap: 1.5rem;
 }
 
 .row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
   gap: 1rem;
-}
-
-.error {
-  margin: 0;
-  color: #b3261e;
 }
 
 .actions {
   display: flex;
   align-items: center;
-  gap: 1rem;
-}
-
-.button {
-  padding: 0.6rem 1.1rem;
-  border: 0;
-  border-radius: 8px;
-  background: var(--color-text);
-  color: var(--color-bg);
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.button:disabled {
-  opacity: 0.6;
-  cursor: progress;
+  gap: 1.25rem;
 }
 
 .cancel {
   color: var(--color-muted);
+  text-decoration: none;
+}
+
+.cancel:hover {
+  color: var(--color-text);
 }
 </style>

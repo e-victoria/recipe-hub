@@ -35,7 +35,7 @@ async function submit() {
 
 <template>
   <section class="auth">
-    <h1>{{ t(`auth.${mode}.title`) }}</h1>
+    <h1 class="page-title">{{ t(`auth.${mode}.title`) }}</h1>
 
     <form class="form" @submit.prevent="submit">
       <label class="field">
@@ -74,13 +74,13 @@ async function submit() {
 
 <style scoped>
 .auth {
-  max-width: 400px;
-  padding: 2rem 0;
+  max-width: 22rem;
+  margin: 0 auto;
+  padding: 4rem 0;
 }
 
 .auth h1 {
-  margin: 0 0 1.5rem;
-  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  margin-bottom: 1.75rem;
 }
 
 .form {
@@ -88,56 +88,18 @@ async function submit() {
   gap: 1.25rem;
 }
 
-.field {
-  display: grid;
-  gap: 0.35rem;
-  font-weight: 600;
-}
-
-.field small {
-  font-weight: 400;
-  color: var(--color-muted);
-}
-
-.field input {
+.form .button {
   width: 100%;
-  padding: 0.55rem 0.7rem;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  font: inherit;
-  font-weight: 400;
-  background: transparent;
-  color: inherit;
-}
-
-.error {
-  margin: 0;
-  color: #b3261e;
-}
-
-.button {
-  padding: 0.6rem 1.1rem;
-  border: 0;
-  border-radius: 8px;
-  background: var(--color-text);
-  color: var(--color-bg);
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.button:disabled {
-  opacity: 0.6;
-  cursor: progress;
 }
 
 .switch {
   margin: 1.5rem 0 0;
   color: var(--color-muted);
+  font-size: 0.9375rem;
 }
 
 .switch a {
   color: var(--color-text);
-  font-weight: 600;
+  font-weight: 500;
 }
 </style>

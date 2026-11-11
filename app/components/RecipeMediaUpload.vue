@@ -43,40 +43,19 @@ async function upload() {
 
 <style scoped>
 .media-upload {
-  margin-top: 2.5rem;
-  padding-top: 1.5rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
   border-top: 1px solid var(--color-border);
 }
 
 h2 {
-  margin: 0 0 0.75rem;
-  font-size: 1.25rem;
+  margin: 0 0 1rem;
+  font-size: 1.125rem;
 }
 
 .form {
   display: grid;
   gap: 1rem;
-  max-width: 640px;
-}
-
-.error {
-  margin: 0;
-  color: #b3261e;
-}
-
-.button {
-  padding: 0.6rem 1.1rem;
-  border: 0;
-  border-radius: 8px;
-  background: var(--color-text);
-  color: var(--color-bg);
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.button:disabled {
-  opacity: 0.6;
-  cursor: default;
+  max-width: 36rem;
 }
 </style>
