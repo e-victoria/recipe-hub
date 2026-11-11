@@ -122,6 +122,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/recipes/{slug}/ingredients": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Replace Ingredients
+         * @description Replace the ingredient list of the recipe's text in `locale`; other locales are untouched.
+         */
+        put: operations["replace_ingredients_recipes__slug__ingredients_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/recipes/{slug}/images/uploads": {
         parameters: {
             query?: never;
@@ -202,6 +222,28 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/assistant/ingredients": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Advise On Ingredients
+         * @description Proposed changes to an ingredient list, for the user to accept or ignore.
+         *
+         *     Works on the list in the request, which may have unsaved edits, and saves nothing.
+         */
+        post: operations["advise_on_ingredients_assistant_ingredients_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -267,6 +309,67 @@ export interface components {
             content_type: "image/jpeg" | "image/png" | "image/webp";
             /** Size Bytes */
             size_bytes: number;
+        };
+        /**
+         * IngredientAdvice
+         * @description `reply` is a short answer for the user; `changes` may be empty.
+         */
+        IngredientAdvice: {
+            /** Reply */
+            reply: string;
+            /** Changes */
+            changes: components["schemas"]["IngredientChange"][];
+        };
+        /**
+         * IngredientAdviceRequest
+         * @description An ingredient list as it stands in the editor, and what the user wants done to it.
+         */
+        IngredientAdviceRequest: {
+            locale: components["schemas"]["Locale"];
+            reply_locale: components["schemas"]["Locale"];
+            /** Title */
+            title?: string | null;
+            /** Servings */
+            servings?: number | null;
+            /** Ingredients */
+            ingredients: string[];
+            /**
+             * Steps
+             * @default []
+             */
+            steps: string[];
+            /** Request */
+            request: string;
+        };
+        /**
+         * IngredientChange
+         * @description One proposed edit. `index` is a 0-based position in the requested `ingredients`.
+         *
+         *     - `replace`: put `ingredient` at `index`.
+         *     - `remove`: drop the ingredient at `index`; `ingredient` is null.
+         *     - `add`: insert `ingredient` after `index`, or at the end when `index` is null.
+         */
+        IngredientChange: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "replace" | "add" | "remove";
+            /** Index */
+            index: number | null;
+            /** Ingredient */
+            ingredient: string | null;
+            /** Reason */
+            reason: string;
+        };
+        /**
+         * IngredientsUpdate
+         * @description Replaces the ingredient list of the recipe's text in `locale`.
+         */
+        IngredientsUpdate: {
+            locale: components["schemas"]["Locale"];
+            /** Ingredients */
+            ingredients: string[];
         };
         /**
          * Locale
@@ -730,6 +833,41 @@ export interface operations {
             };
         };
     };
+    replace_ingredients_recipes__slug__ingredients_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IngredientsUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     start_image_upload_recipes__slug__images_uploads_post: {
         parameters: {
             query?: never;
@@ -857,6 +995,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RecipeVideo"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    advise_on_ingredients_assistant_ingredients_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IngredientAdviceRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IngredientAdvice"];
                 };
             };
             /** @description Validation Error */

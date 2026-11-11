@@ -86,6 +86,44 @@
     "upload": "Upload",
     "uploadFailed": "Some files could not be uploaded. Try again."
   },
+  "ingredients": {
+    "edit": "Edit",
+    "empty": "No ingredients yet.",
+    "item": "Ingredient {number}",
+    "placeholder": "e.g. 200 g flour",
+    "remove": "Remove {name}",
+    "add": "Add ingredient",
+    "save": "Save ingredients",
+    "saving": "Saving…",
+    "cancel": "Cancel",
+    "error": "Could not save the ingredients. Try again in a moment.",
+    "ai": {
+      "title": "Ask AI for help",
+      "hint": "Describe what you want to change. You choose which suggestions to apply.",
+      "placeholder": "e.g. What can I use instead of eggs?",
+      "ask": "Ask",
+      "asking": "Thinking…",
+      "examples": {
+        "vegan": "Make it vegan",
+        "glutenFree": "Make it gluten-free",
+        "double": "Double the amounts"
+      },
+      "action": {
+        "replace": "Replace",
+        "add": "Add",
+        "remove": "Remove"
+      },
+      "apply": "Apply",
+      "dismiss": "Dismiss",
+      "applyAll": "Apply all",
+      "disclaimer": "AI can get things wrong. Check the amounts before saving.",
+      "error": {
+        "unavailable": "AI help is not available right now.",
+        "tooMany": "Too many requests. Wait a while and try again.",
+        "generic": "Could not get suggestions. Try again in a moment."
+      }
+    }
+  },
   "recipeNew": {
     "title": "New recipe",
     "back": "Back to recipes",
