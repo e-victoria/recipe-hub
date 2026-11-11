@@ -28,6 +28,37 @@
       "retry": "Spróbuj ponownie"
     }
   },
+  "media": {
+    "field": "Zdjęcia i filmy",
+    "hint": "JPEG, PNG lub WebP do 10 MB, MP4 lub WebM do 200 MB.",
+    "coverHint": "Pierwsze zdjęcie będzie okładką.",
+    "remove": "Usuń {name}",
+    "uploading": "Przesyłanie: {current} z {total}…",
+    "error": {
+      "type": "{name}: ten typ pliku nie jest obsługiwany.",
+      "size": "{name}: plik jest za duży.",
+      "empty": "{name}: plik jest pusty."
+    }
+  },
+  "recipe": {
+    "back": "Wróć do przepisów",
+    "ingredients": "Składniki",
+    "steps": "Przygotowanie",
+    "photos": "Zdjęcia",
+    "videos": "Filmy",
+    "imageAlt": "{title}, zdjęcie {number}",
+    "notFound": {
+      "title": "Nie znaleziono przepisu",
+      "hint": "Mógł zostać usunięty albo link jest nieaktualny."
+    },
+    "error": {
+      "title": "Nie udało się wczytać przepisu"
+    },
+    "mediaFailed": "Przepis został zapisany, ale nie udało się przesłać niektórych zdjęć lub filmów. Możesz dodać je poniżej.",
+    "addMedia": "Dodaj zdjęcia i filmy",
+    "upload": "Prześlij",
+    "uploadFailed": "Nie udało się przesłać niektórych plików. Spróbuj ponownie."
+  },
   "recipeNew": {
     "title": "Nowy przepis",
     "back": "Wróć do przepisów",

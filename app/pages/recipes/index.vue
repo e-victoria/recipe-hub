@@ -30,7 +30,9 @@ const { data: recipes, error, status, refresh } = await useFetch<RecipeSummary[]
     <ul v-else-if="recipes?.length" class="list">
       <!-- A recipe may only exist in another language, so the card declares its own. -->
       <li v-for="recipe in recipes" :key="recipe.id" class="card" :lang="recipe.locale">
-        <h2>{{ recipe.title }}</h2>
+        <h2>
+          <NuxtLink class="card-link" :to="localePath(`/recipes/${recipe.slug}`)">{{ recipe.title }}</NuxtLink>
+        </h2>
         <p v-if="recipe.description" class="card-description">{{ recipe.description }}</p>
         <ul v-if="recipeMeta(recipe).length" class="card-meta">
           <li v-for="item in recipeMeta(recipe)" :key="item.key">
@@ -90,16 +92,43 @@ const { data: recipes, error, status, refresh } = await useFetch<RecipeSummary[]
 }
 
 .card {
+  position: relative;
   padding: 1rem 1.25rem;
   border: 1px solid var(--color-border);
   border-radius: 12px;
   background: var(--color-surface);
 }
 
+.card:hover {
+  border-color: var(--color-muted);
+}
+
 .card h2 {
   margin: 0 0 0.25rem;
   font-size: 1.125rem;
   overflow-wrap: anywhere;
+}
+
+.card-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Stretches the link over the card, so the whole card is clickable. */
+.card-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.card-link:focus-visible {
+  outline: none;
+}
+
+.card-link:focus-visible::after {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
 }
 
 .card-description {

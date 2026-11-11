@@ -18,6 +18,9 @@ const form = reactive<RecipeFormValues>({
 })
 const submitting = ref(false)
 const errorKey = ref<string | null>(null)
+const files = ref<File[]>([])
+const uploading = ref<number | null>(null)
+const mediaApi = useMediaApi()
 
 const localeOptions = computed(() =>
   locales.value.map((item) => ({ code: item.code as Locale, name: item.name ?? item.code })),
@@ -27,18 +30,25 @@ async function submit() {
   submitting.value = true
   errorKey.value = null
   try {
-    await $fetch<Recipe>('/recipes', {
+    const recipe = await $fetch<Recipe>('/recipes', {
       baseURL: config.public.apiBase,
       method: 'POST',
       body: buildRecipePayload(form),
     })
-    await navigateTo(localePath('/recipes'))
+    const failed = await uploadMedia(files.value, mediaApi(recipe.slug), (current) => {
+      uploading.value = current
+    })
+    // The recipe exists by now, so saving again would duplicate it: show it with a notice instead.
+    await navigateTo(failed.length
+      ? localePath({ path: `/recipes/${recipe.slug}`, query: { mediaFailed: '1' } })
+      : localePath('/recipes'))
   } catch (error) {
     errorKey.value = (error as { statusCode?: number }).statusCode === 422
       ? 'recipeNew.error.invalid'
       : 'recipeNew.error.generic'
   } finally {
     submitting.value = false
+    uploading.value = null
   }
 }
 </script>
@@ -96,11 +106,16 @@ async function submit() {
         <small>{{ t('recipeNew.hints.onePerLine') }}</small>
       </label>
 
+      <MediaPicker v-model="files" :disabled="submitting" cover-hint />
+
       <p v-if="errorKey" class="error" role="alert">{{ t(errorKey) }}</p>
 
       <div class="actions">
         <button class="button" type="submit" :disabled="submitting">
-          {{ submitting ? t('recipeNew.saving') : t('recipeNew.save') }}
+          <template v-if="uploading">
+            {{ t('media.uploading', { current: uploading, total: files.length }) }}
+          </template>
+          <template v-else>{{ submitting ? t('recipeNew.saving') : t('recipeNew.save') }}</template>
         </button>
         <NuxtLink class="cancel" :to="localePath('/recipes')">{{ t('recipeNew.cancel') }}</NuxtLink>
       </div>

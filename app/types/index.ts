@@ -4,4 +4,7 @@ import type { components } from './api'
 export type Locale = components['schemas']['Locale']
 export type RecipeCreate = components['schemas']['RecipeCreate']
 export type Recipe = components['schemas']['Recipe']
+export type RecipeDetail = components['schemas']['RecipeDetail']
 export type RecipeSummary = components['schemas']['RecipeSummary']
+export type ImageCreate = components['schemas']['ImageCreate']
+export type MediaUpload = components['schemas']['MediaUpload']

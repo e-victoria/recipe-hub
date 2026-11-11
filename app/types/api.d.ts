@@ -25,6 +25,106 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/recipes/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Recipe
+         * @description One recipe with its media, with text in `locale` where a translation exists.
+         */
+        get: operations["get_recipe_recipes__slug__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/recipes/{slug}/images/uploads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Start Image Upload
+         * @description A URL to upload an image to. Add it to the recipe afterwards with POST /images.
+         */
+        post: operations["start_image_upload_recipes__slug__images_uploads_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/recipes/{slug}/images": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add Image
+         * @description Add an uploaded image after the recipe's other images.
+         */
+        post: operations["add_image_recipes__slug__images_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/recipes/{slug}/videos/uploads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Start Video Upload
+         * @description A URL to upload a video to. Add it to the recipe afterwards with POST /videos.
+         */
+        post: operations["start_video_upload_recipes__slug__videos_uploads_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/recipes/{slug}/videos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add Video
+         * @description Add an uploaded video after the recipe's other videos.
+         */
+        post: operations["add_video_recipes__slug__videos_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -58,11 +158,40 @@ export interface components {
             /** Version */
             version: string;
         };
+        /** ImageCreate */
+        ImageCreate: {
+            /** Storage Key */
+            storage_key: string;
+            /** Width */
+            width?: number | null;
+            /** Height */
+            height?: number | null;
+        };
+        /** ImageUploadRequest */
+        ImageUploadRequest: {
+            /**
+             * Content Type
+             * @enum {string}
+             */
+            content_type: "image/jpeg" | "image/png" | "image/webp";
+            /** Size Bytes */
+            size_bytes: number;
+        };
         /**
          * Locale
          * @enum {string}
          */
         Locale: "en" | "ru" | "pl";
+        /**
+         * MediaUpload
+         * @description PUT the file to `upload_url` with the same Content-Type, then confirm `storage_key`.
+         */
+        MediaUpload: {
+            /** Storage Key */
+            storage_key: string;
+            /** Upload Url */
+            upload_url: string;
+        };
         /**
          * Recipe
          * @description A recipe with every translation it has.
@@ -104,6 +233,67 @@ export interface components {
             cook_minutes?: number | null;
             /** Translations */
             translations: components["schemas"]["RecipeTranslationIn"][];
+        };
+        /**
+         * RecipeDetail
+         * @description A full recipe in one locale. `locale` says which one the text is in.
+         */
+        RecipeDetail: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Slug */
+            slug: string;
+            locale: components["schemas"]["Locale"];
+            /** Title */
+            title: string;
+            /** Description */
+            description: string | null;
+            /** Ingredients */
+            ingredients: string[];
+            /** Steps */
+            steps: string[];
+            /** Servings */
+            servings: number | null;
+            /** Prep Minutes */
+            prep_minutes: number | null;
+            /** Cook Minutes */
+            cook_minutes: number | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Images */
+            images: components["schemas"]["RecipeImage"][];
+            /** Videos */
+            videos: components["schemas"]["RecipeVideo"][];
+        };
+        /**
+         * RecipeImage
+         * @description `url` is presigned and expires; fetch the recipe again for a fresh one.
+         */
+        RecipeImage: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Url */
+            url: string;
+            /** Content Type */
+            content_type: string;
+            /** Width */
+            width: number | null;
+            /** Height */
+            height: number | null;
         };
         /**
          * RecipeSummary
@@ -164,6 +354,21 @@ export interface components {
             /** Steps */
             steps: string[];
         };
+        /**
+         * RecipeVideo
+         * @description `url` is presigned and expires; fetch the recipe again for a fresh one.
+         */
+        RecipeVideo: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Url */
+            url: string;
+            /** Content Type */
+            content_type: string;
+        };
         /** ValidationError */
         ValidationError: {
             /** Location */
@@ -176,6 +381,21 @@ export interface components {
             input?: unknown;
             /** Context */
             ctx?: Record<string, never>;
+        };
+        /** VideoCreate */
+        VideoCreate: {
+            /** Storage Key */
+            storage_key: string;
+        };
+        /** VideoUploadRequest */
+        VideoUploadRequest: {
+            /**
+             * Content Type
+             * @enum {string}
+             */
+            content_type: "video/mp4" | "video/webm";
+            /** Size Bytes */
+            size_bytes: number;
         };
     };
     responses: never;
@@ -239,6 +459,179 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Recipe"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_recipe_recipes__slug__get: {
+        parameters: {
+            query?: {
+                locale?: components["schemas"]["Locale"];
+            };
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    start_image_upload_recipes__slug__images_uploads_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ImageUploadRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaUpload"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_image_recipes__slug__images_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ImageCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeImage"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    start_video_upload_recipes__slug__videos_uploads_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VideoUploadRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaUpload"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_video_recipes__slug__videos_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VideoCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeVideo"];
                 };
             };
             /** @description Validation Error */
