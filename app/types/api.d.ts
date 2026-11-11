@@ -421,6 +421,7 @@ export interface components {
              * Format: date-time
              */
             created_at: string;
+            cover: components["schemas"]["RecipeImage"] | null;
         };
         /** RecipeTranslationIn */
         RecipeTranslationIn: {

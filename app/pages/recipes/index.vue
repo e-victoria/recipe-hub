@@ -27,17 +27,9 @@ const { data: recipes, error, status, refresh } = await useFetch<RecipeSummary[]
     </div>
 
     <ul v-else-if="recipes?.length" class="list">
-      <!-- A recipe may only exist in another language, so the card declares its own. -->
-      <li v-for="recipe in recipes" :key="recipe.id" class="card" :lang="recipe.locale">
-        <h2>
-          <NuxtLink class="card-link" :to="localePath(`/recipes/${recipe.slug}`)">{{ recipe.title }}</NuxtLink>
-        </h2>
-        <p v-if="recipe.description" class="card-description">{{ recipe.description }}</p>
-        <ul v-if="recipeMeta(recipe).length" class="card-meta">
-          <li v-for="item in recipeMeta(recipe)" :key="item.key">
-            {{ t(item.key, { value: item.value }) }}
-          </li>
-        </ul>
+      <!-- The first row is likely on screen at once, so it loads without waiting. -->
+      <li v-for="(recipe, index) in recipes" :key="recipe.id">
+        <RecipeCard :recipe="recipe" :eager="index < 3" />
       </li>
     </ul>
 
@@ -69,12 +61,17 @@ const { data: recipes, error, status, refresh } = await useFetch<RecipeSummary[]
 
 .button {
   display: inline-block;
-  padding: 0.6rem 1.1rem;
-  border-radius: 8px;
-  background: var(--color-text);
-  color: var(--color-bg);
+  padding: 0.65rem 1.25rem;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
   font-weight: 600;
   text-decoration: none;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
 }
 
 .button:hover {
@@ -83,74 +80,17 @@ const { data: recipes, error, status, refresh } = await useFetch<RecipeSummary[]
 
 .list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 1.25rem;
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-.card {
-  position: relative;
-  padding: 1rem 1.25rem;
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  background: var(--color-surface);
-}
-
-.card:hover {
-  border-color: var(--color-muted);
-}
-
-.card h2 {
-  margin: 0 0 0.25rem;
-  font-size: 1.125rem;
-  overflow-wrap: anywhere;
-}
-
-.card-link {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* Stretches the link over the card, so the whole card is clickable. */
-.card-link::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-}
-
-.card-link:focus-visible {
-  outline: none;
-}
-
-.card-link:focus-visible::after {
-  outline: 2px solid var(--color-text);
-  outline-offset: 2px;
-}
-
-.card-description {
-  margin: 0 0 0.75rem;
-  color: var(--color-muted);
-  overflow-wrap: anywhere;
-}
-
-.card-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem 1rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  color: var(--color-muted);
-  font-size: 0.875rem;
 }
 
 .empty {
   padding: 3rem 1rem;
   border: 1px dashed var(--color-border);
-  border-radius: 12px;
+  border-radius: 18px;
   text-align: center;
 }
 
