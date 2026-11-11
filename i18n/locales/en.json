@@ -6,5 +6,82 @@
   "home": {
     "title": "Find something good to cook",
     "tagline": "Recipes you can actually make tonight."
+  },
+  "nav": {
+    "recipes": "Recipes"
+  },
+  "recipes": {
+    "title": "Recipes",
+    "add": "Add a new recipe",
+    "empty": {
+      "title": "No recipes yet",
+      "hint": "Add your first recipe to start building your collection."
+    },
+    "meta": {
+      "servings": "Servings: {value}",
+      "prep": "Prep: {value} min",
+      "cook": "Cook: {value} min"
+    },
+    "error": {
+      "title": "Could not load recipes",
+      "hint": "Check your connection and try again.",
+      "retry": "Try again"
+    }
+  },
+  "media": {
+    "field": "Photos and videos",
+    "hint": "JPEG, PNG or WebP up to 10 MB, MP4 or WebM up to 200 MB.",
+    "coverHint": "The first photo becomes the cover.",
+    "remove": "Remove {name}",
+    "uploading": "Uploading {current} of {total}…",
+    "error": {
+      "type": "{name}: this file type is not supported.",
+      "size": "{name}: this file is too large.",
+      "empty": "{name}: this file is empty."
+    }
+  },
+  "recipe": {
+    "back": "Back to recipes",
+    "ingredients": "Ingredients",
+    "steps": "Steps",
+    "photos": "Photos",
+    "videos": "Videos",
+    "imageAlt": "{title}, photo {number}",
+    "notFound": {
+      "title": "Recipe not found",
+      "hint": "It may have been deleted, or the link is out of date."
+    },
+    "error": {
+      "title": "Could not load this recipe"
+    },
+    "mediaFailed": "The recipe was saved, but some photos or videos could not be uploaded. You can add them below.",
+    "addMedia": "Add photos and videos",
+    "upload": "Upload",
+    "uploadFailed": "Some files could not be uploaded. Try again."
+  },
+  "recipeNew": {
+    "title": "New recipe",
+    "back": "Back to recipes",
+    "fields": {
+      "language": "Recipe language",
+      "title": "Title",
+      "description": "Description",
+      "servings": "Servings",
+      "prepMinutes": "Prep time (min)",
+      "cookMinutes": "Cook time (min)",
+      "ingredients": "Ingredients",
+      "steps": "Steps"
+    },
+    "hints": {
+      "language": "The language the recipe text is written in.",
+      "onePerLine": "One per line."
+    },
+    "save": "Save recipe",
+    "saving": "Saving…",
+    "cancel": "Cancel",
+    "error": {
+      "invalid": "Some fields are not valid. Check them and try again.",
+      "generic": "Could not save the recipe. Try again in a moment."
+    }
   }
 }

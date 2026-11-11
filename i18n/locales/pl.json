@@ -6,5 +6,82 @@
   "home": {
     "title": "Znajdź coś dobrego do ugotowania",
     "tagline": "Przepisy, które naprawdę zrobisz jeszcze dziś wieczorem."
+  },
+  "nav": {
+    "recipes": "Przepisy"
+  },
+  "recipes": {
+    "title": "Przepisy",
+    "add": "Dodaj nowy przepis",
+    "empty": {
+      "title": "Nie ma jeszcze przepisów",
+      "hint": "Dodaj pierwszy przepis, aby zacząć budować swoją kolekcję."
+    },
+    "meta": {
+      "servings": "Porcje: {value}",
+      "prep": "Przygotowanie: {value} min",
+      "cook": "Gotowanie: {value} min"
+    },
+    "error": {
+      "title": "Nie udało się wczytać przepisów",
+      "hint": "Sprawdź połączenie i spróbuj ponownie.",
+      "retry": "Spróbuj ponownie"
+    }
+  },
+  "media": {
+    "field": "Zdjęcia i filmy",
+    "hint": "JPEG, PNG lub WebP do 10 MB, MP4 lub WebM do 200 MB.",
+    "coverHint": "Pierwsze zdjęcie będzie okładką.",
+    "remove": "Usuń {name}",
+    "uploading": "Przesyłanie: {current} z {total}…",
+    "error": {
+      "type": "{name}: ten typ pliku nie jest obsługiwany.",
+      "size": "{name}: plik jest za duży.",
+      "empty": "{name}: plik jest pusty."
+    }
+  },
+  "recipe": {
+    "back": "Wróć do przepisów",
+    "ingredients": "Składniki",
+    "steps": "Przygotowanie",
+    "photos": "Zdjęcia",
+    "videos": "Filmy",
+    "imageAlt": "{title}, zdjęcie {number}",
+    "notFound": {
+      "title": "Nie znaleziono przepisu",
+      "hint": "Mógł zostać usunięty albo link jest nieaktualny."
+    },
+    "error": {
+      "title": "Nie udało się wczytać przepisu"
+    },
+    "mediaFailed": "Przepis został zapisany, ale nie udało się przesłać niektórych zdjęć lub filmów. Możesz dodać je poniżej.",
+    "addMedia": "Dodaj zdjęcia i filmy",
+    "upload": "Prześlij",
+    "uploadFailed": "Nie udało się przesłać niektórych plików. Spróbuj ponownie."
+  },
+  "recipeNew": {
+    "title": "Nowy przepis",
+    "back": "Wróć do przepisów",
+    "fields": {
+      "language": "Język przepisu",
+      "title": "Tytuł",
+      "description": "Opis",
+      "servings": "Porcje",
+      "prepMinutes": "Przygotowanie (min)",
+      "cookMinutes": "Gotowanie (min)",
+      "ingredients": "Składniki",
+      "steps": "Kroki"
+    },
+    "hints": {
+      "language": "Język, w którym napisany jest tekst przepisu.",
+      "onePerLine": "Po jednym w wierszu."
+    },
+    "save": "Zapisz przepis",
+    "saving": "Zapisywanie…",
+    "cancel": "Anuluj",
+    "error": {
+      "invalid": "Niektóre pola są nieprawidłowe. Sprawdź je i spróbuj ponownie.",
+      "generic": "Nie udało się zapisać przepisu. Spróbuj ponownie za chwilę."
+    }
   }
 }
