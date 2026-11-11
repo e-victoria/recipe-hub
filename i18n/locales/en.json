@@ -4,8 +4,32 @@
     "language": "Language"
   },
   "home": {
-    "title": "Find something good to cook",
-    "tagline": "Recipes you can actually make tonight."
+    "title": "Every recipe you love, in one place",
+    "tagline": "Save recipes from anywhere, see what is in them, and plan the week for the whole family.",
+    "cta": {
+      "register": "Create an account",
+      "login": "I already have an account",
+      "recipes": "Go to my recipes"
+    },
+    "features": {
+      "title": "What Recipe Hub does for you",
+      "save": {
+        "title": "Save recipes your way",
+        "text": "Type a recipe in, paste a link or copied text, or ask the AI assistant to come up with something new."
+      },
+      "nutrition": {
+        "title": "Know what is on the plate",
+        "text": "Calories, protein, fat, vitamins and minerals for every recipe, estimated from the ingredients when they are missing."
+      },
+      "plan": {
+        "title": "Plan the week together",
+        "text": "Build a weekly menu around each family member: their tastes, calorie needs and health conditions."
+      }
+    },
+    "closing": {
+      "title": "Ready to cook?",
+      "text": "Start your collection with the first recipe. It takes a minute."
+    }
   },
   "nav": {
     "recipes": "Recipes",
