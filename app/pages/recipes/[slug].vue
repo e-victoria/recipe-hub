@@ -25,6 +25,13 @@ const cover = computed(() => recipe.value?.images[0])
 const moreImages = computed(() => recipe.value?.images.slice(1) ?? [])
 const meta = computed(() => (recipe.value ? recipeMeta(recipe.value) : []))
 
+const editingIngredients = ref(false)
+
+async function onIngredientsSaved() {
+  await refresh()
+  editingIngredients.value = false
+}
+
 function onUploaded() {
   mediaFailed.value = false
   refresh()
@@ -73,11 +80,36 @@ function onUploaded() {
         />
 
         <div class="body">
-          <section v-if="recipe.ingredients.length" class="ingredients">
-            <h2>{{ t('recipe.ingredients') }}</h2>
-            <ul>
+          <section class="ingredients" :class="{ editing: editingIngredients }">
+            <div class="section-head">
+              <h2>{{ t('recipe.ingredients') }}</h2>
+              <button
+                v-if="!editingIngredients"
+                class="edit"
+                type="button"
+                :aria-label="`${t('ingredients.edit')}: ${t('recipe.ingredients')}`"
+                @click="editingIngredients = true"
+              >
+                {{ t('ingredients.edit') }}
+              </button>
+            </div>
+            <!-- The editor's own text is in the app's language, not the recipe's. -->
+            <IngredientEditor
+              v-if="editingIngredients"
+              :lang="locale"
+              :slug="recipe.slug"
+              :recipe-locale="recipe.locale"
+              :title="recipe.title"
+              :servings="recipe.servings"
+              :ingredients="recipe.ingredients"
+              :steps="recipe.steps"
+              @saved="onIngredientsSaved"
+              @cancel="editingIngredients = false"
+            />
+            <ul v-else-if="recipe.ingredients.length">
               <li v-for="(ingredient, index) in recipe.ingredients" :key="index">{{ ingredient }}</li>
             </ul>
+            <p v-else class="empty" :lang="locale">{{ t('ingredients.empty') }}</p>
           </section>
 
           <section v-if="recipe.steps.length" class="steps">
@@ -178,19 +210,52 @@ article > section {
   margin-top: 3rem;
 }
 
-.ingredients ul {
+/* The editor needs the full width; the steps move below it. */
+.ingredients.editing {
+  grid-column: 1 / -1;
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.edit {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-muted);
+  font: inherit;
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.edit:hover {
+  color: var(--color-text);
+}
+
+.empty {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.ingredients > ul {
   margin: 0;
   padding: 0;
   list-style: none;
   overflow-wrap: anywhere;
 }
 
-.ingredients li {
+.ingredients > ul > li {
   padding: 0.55rem 0;
   border-bottom: 1px solid var(--color-border);
 }
 
-.ingredients li:first-child {
+.ingredients > ul > li:first-child {
   padding-top: 0;
 }
 

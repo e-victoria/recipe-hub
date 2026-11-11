@@ -86,6 +86,44 @@
     "upload": "Prześlij",
     "uploadFailed": "Nie udało się przesłać niektórych plików. Spróbuj ponownie."
   },
+  "ingredients": {
+    "edit": "Edytuj",
+    "empty": "Nie ma jeszcze składników.",
+    "item": "Składnik {number}",
+    "placeholder": "np. 200 g mąki",
+    "remove": "Usuń: {name}",
+    "add": "Dodaj składnik",
+    "save": "Zapisz składniki",
+    "saving": "Zapisywanie…",
+    "cancel": "Anuluj",
+    "error": "Nie udało się zapisać składników. Spróbuj ponownie za chwilę.",
+    "ai": {
+      "title": "Zapytaj AI",
+      "hint": "Opisz, co chcesz zmienić. Sam wybierasz, które propozycje zastosować.",
+      "placeholder": "np. czym zastąpić jajka?",
+      "ask": "Zapytaj",
+      "asking": "Myślę…",
+      "examples": {
+        "vegan": "Zrób wersję wegańską",
+        "glutenFree": "Zrób wersję bezglutenową",
+        "double": "Podwój ilości"
+      },
+      "action": {
+        "replace": "Zamień",
+        "add": "Dodaj",
+        "remove": "Usuń"
+      },
+      "apply": "Zastosuj",
+      "dismiss": "Odrzuć",
+      "applyAll": "Zastosuj wszystkie",
+      "disclaimer": "AI może się mylić. Sprawdź ilości przed zapisaniem.",
+      "error": {
+        "unavailable": "Pomoc AI jest teraz niedostępna.",
+        "tooMany": "Zbyt wiele zapytań. Odczekaj chwilę i spróbuj ponownie.",
+        "generic": "Nie udało się pobrać propozycji. Spróbuj ponownie za chwilę."
+      }
+    }
+  },
   "recipeNew": {
     "title": "Nowy przepis",
     "back": "Wróć do przepisów",
