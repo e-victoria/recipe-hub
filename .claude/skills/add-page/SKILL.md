@@ -10,4 +10,6 @@ description: Add a new page to the Nuxt web app with EN/RU/PL translations. Use 
 3. Add every new key to all three files in `i18n/locales/` (see the `add-translation` skill).
 4. Link to the page with `useLocalePath()`: `<NuxtLink :to="localePath('/<route>')">`.
 5. Keep the page server-render safe: browser-only code goes in `onMounted`.
-6. Run `npm test` and `npm run build`. Then check `/<route>`, `/ru/<route>` and `/pl/<route>` render the right language.
+6. Load data with `useFetch('<path>', { baseURL: '/api' })`, which forwards the session cookie during server rendering too.
+7. The page requires login by default. Only if it shows no user data and must work logged out, add its route name to `PUBLIC_PAGES` in `app/middleware/auth.global.ts`.
+8. Run `npm test` and `npm run build`. Then, logged in, check `/<route>`, `/ru/<route>` and `/pl/<route>` render the right language; logged out, check a protected page redirects to login.

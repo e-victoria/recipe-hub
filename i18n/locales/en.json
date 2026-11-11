@@ -4,11 +4,38 @@
     "language": "Language"
   },
   "home": {
-    "title": "Find something good to cook",
-    "tagline": "Recipes you can actually make tonight."
+    "title": "Every recipe you love, in one place",
+    "tagline": "Save recipes from anywhere, see what is in them, and plan the week for the whole family.",
+    "cta": {
+      "register": "Create an account",
+      "login": "I already have an account",
+      "recipes": "Go to my recipes"
+    },
+    "features": {
+      "title": "What Recipe Hub does for you",
+      "save": {
+        "title": "Save recipes your way",
+        "text": "Type a recipe in, paste a link or copied text, or ask the AI assistant to come up with something new."
+      },
+      "nutrition": {
+        "title": "Know what is on the plate",
+        "text": "Calories, protein, fat, vitamins and minerals for every recipe, estimated from the ingredients when they are missing."
+      },
+      "plan": {
+        "title": "Plan the week together",
+        "text": "Build a weekly menu around each family member: their tastes, calorie needs and health conditions."
+      }
+    },
+    "closing": {
+      "title": "Ready to cook?",
+      "text": "Start your collection with the first recipe. It takes a minute."
+    }
   },
   "nav": {
-    "recipes": "Recipes"
+    "recipes": "Recipes",
+    "login": "Log in",
+    "logout": "Log out",
+    "account": "Logged in as {email}"
   },
   "recipes": {
     "title": "Recipes",
@@ -59,6 +86,44 @@
     "upload": "Upload",
     "uploadFailed": "Some files could not be uploaded. Try again."
   },
+  "ingredients": {
+    "edit": "Edit",
+    "empty": "No ingredients yet.",
+    "item": "Ingredient {number}",
+    "placeholder": "e.g. 200 g flour",
+    "remove": "Remove {name}",
+    "add": "Add ingredient",
+    "save": "Save ingredients",
+    "saving": "Saving…",
+    "cancel": "Cancel",
+    "error": "Could not save the ingredients. Try again in a moment.",
+    "ai": {
+      "title": "Ask AI for help",
+      "hint": "Describe what you want to change. You choose which suggestions to apply.",
+      "placeholder": "e.g. What can I use instead of eggs?",
+      "ask": "Ask",
+      "asking": "Thinking…",
+      "examples": {
+        "vegan": "Make it vegan",
+        "glutenFree": "Make it gluten-free",
+        "double": "Double the amounts"
+      },
+      "action": {
+        "replace": "Replace",
+        "add": "Add",
+        "remove": "Remove"
+      },
+      "apply": "Apply",
+      "dismiss": "Dismiss",
+      "applyAll": "Apply all",
+      "disclaimer": "AI can get things wrong. Check the amounts before saving.",
+      "error": {
+        "unavailable": "AI help is not available right now.",
+        "tooMany": "Too many requests. Wait a while and try again.",
+        "generic": "Could not get suggestions. Try again in a moment."
+      }
+    }
+  },
   "recipeNew": {
     "title": "New recipe",
     "back": "Back to recipes",
@@ -82,6 +147,36 @@
     "error": {
       "invalid": "Some fields are not valid. Check them and try again.",
       "generic": "Could not save the recipe. Try again in a moment."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Log in",
+      "submit": "Log in",
+      "submitting": "Logging in…",
+      "switch": "No account yet?",
+      "switchLink": "Create one"
+    },
+    "register": {
+      "title": "Create an account",
+      "submit": "Create account",
+      "submitting": "Creating…",
+      "switch": "Already have an account?",
+      "switchLink": "Log in"
+    },
+    "fields": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "hints": {
+      "password": "At least 8 characters."
+    },
+    "error": {
+      "invalid": "Wrong email or password.",
+      "taken": "An account with this email already exists.",
+      "invalidInput": "Check your email, and use a password of at least 8 characters.",
+      "tooMany": "Too many attempts. Wait a few minutes and try again.",
+      "generic": "Something went wrong. Try again in a moment."
     }
   }
 }

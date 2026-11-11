@@ -4,6 +4,83 @@
  */
 
 export interface paths {
+    "/auth/register": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Register
+         * @description Create an account and sign in to it.
+         */
+        post: operations["register_auth_register_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Login
+         * @description Sign in. Every failure gets the same answer, so it doesn't reveal which emails exist.
+         */
+        post: operations["login_auth_login_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Logout
+         * @description End this session. Other devices stay signed in.
+         */
+        post: operations["logout_auth_logout_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Me */
+        get: operations["me_auth_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/recipes": {
         parameters: {
             query?: never;
@@ -38,6 +115,26 @@ export interface paths {
          */
         get: operations["get_recipe_recipes__slug__get"];
         put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/recipes/{slug}/ingredients": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Replace Ingredients
+         * @description Replace the ingredient list of the recipe's text in `locale`; other locales are untouched.
+         */
+        put: operations["replace_ingredients_recipes__slug__ingredients_put"];
         post?: never;
         delete?: never;
         options?: never;
@@ -125,6 +222,28 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/assistant/ingredients": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Advise On Ingredients
+         * @description Proposed changes to an ingredient list, for the user to accept or ignore.
+         *
+         *     Works on the list in the request, which may have unsaved edits, and saves nothing.
+         */
+        post: operations["advise_on_ingredients_assistant_ingredients_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -146,6 +265,20 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /**
+         * AuthSession
+         * @description Send `token` as `Authorization: Bearer <token>` until `expires_at`.
+         */
+        AuthSession: {
+            /** Token */
+            token: string;
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            user: components["schemas"]["User"];
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
@@ -178,10 +311,78 @@ export interface components {
             size_bytes: number;
         };
         /**
+         * IngredientAdvice
+         * @description `reply` is a short answer for the user; `changes` may be empty.
+         */
+        IngredientAdvice: {
+            /** Reply */
+            reply: string;
+            /** Changes */
+            changes: components["schemas"]["IngredientChange"][];
+        };
+        /**
+         * IngredientAdviceRequest
+         * @description An ingredient list as it stands in the editor, and what the user wants done to it.
+         */
+        IngredientAdviceRequest: {
+            locale: components["schemas"]["Locale"];
+            reply_locale: components["schemas"]["Locale"];
+            /** Title */
+            title?: string | null;
+            /** Servings */
+            servings?: number | null;
+            /** Ingredients */
+            ingredients: string[];
+            /**
+             * Steps
+             * @default []
+             */
+            steps: string[];
+            /** Request */
+            request: string;
+        };
+        /**
+         * IngredientChange
+         * @description One proposed edit. `index` is a 0-based position in the requested `ingredients`.
+         *
+         *     - `replace`: put `ingredient` at `index`.
+         *     - `remove`: drop the ingredient at `index`; `ingredient` is null.
+         *     - `add`: insert `ingredient` after `index`, or at the end when `index` is null.
+         */
+        IngredientChange: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "replace" | "add" | "remove";
+            /** Index */
+            index: number | null;
+            /** Ingredient */
+            ingredient: string | null;
+            /** Reason */
+            reason: string;
+        };
+        /**
+         * IngredientsUpdate
+         * @description Replaces the ingredient list of the recipe's text in `locale`.
+         */
+        IngredientsUpdate: {
+            locale: components["schemas"]["Locale"];
+            /** Ingredients */
+            ingredients: string[];
+        };
+        /**
          * Locale
          * @enum {string}
          */
         Locale: "en" | "ru" | "pl";
+        /** LoginRequest */
+        LoginRequest: {
+            /** Email */
+            email: string;
+            /** Password */
+            password: string;
+        };
         /**
          * MediaUpload
          * @description PUT the file to `upload_url` with the same Content-Type, then confirm `storage_key`.
@@ -323,6 +524,7 @@ export interface components {
              * Format: date-time
              */
             created_at: string;
+            cover: components["schemas"]["RecipeImage"] | null;
         };
         /** RecipeTranslationIn */
         RecipeTranslationIn: {
@@ -369,6 +571,28 @@ export interface components {
             /** Content Type */
             content_type: string;
         };
+        /** RegisterRequest */
+        RegisterRequest: {
+            /** Email */
+            email: string;
+            /** Password */
+            password: string;
+        };
+        /** User */
+        User: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Email */
+            email: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
         /** ValidationError */
         ValidationError: {
             /** Location */
@@ -406,6 +630,110 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    register_auth_register_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RegisterRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthSession"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    login_auth_login_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoginRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthSession"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    logout_auth_logout_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    me_auth_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["User"];
+                };
+            };
+        };
+    };
     list_recipes_recipes_get: {
         parameters: {
             query?: {
@@ -484,6 +812,41 @@ export interface operations {
             cookie?: never;
         };
         requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    replace_ingredients_recipes__slug__ingredients_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IngredientsUpdate"];
+            };
+        };
         responses: {
             /** @description Successful Response */
             200: {
@@ -632,6 +995,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RecipeVideo"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    advise_on_ingredients_assistant_ingredients_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IngredientAdviceRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IngredientAdvice"];
                 };
             };
             /** @description Validation Error */

@@ -3,12 +3,11 @@ import type { RecipeDetail } from '~/types'
 
 const { t, locale } = useI18n()
 const localePath = useLocalePath()
-const config = useRuntimeConfig()
 const route = useRoute()
 
 const slug = encodeURIComponent(String(route.params.slug))
 const { data: recipe, error, status, refresh } = await useFetch<RecipeDetail>(`/recipes/${slug}`, {
-  baseURL: config.public.apiBase,
+  baseURL: '/api',
   query: { locale },
 })
 
@@ -24,6 +23,14 @@ useHead({ title: () => `${recipe.value?.title ?? t('recipes.title')} · ${t('app
 
 const cover = computed(() => recipe.value?.images[0])
 const moreImages = computed(() => recipe.value?.images.slice(1) ?? [])
+const meta = computed(() => (recipe.value ? recipeMeta(recipe.value) : []))
+
+const editingIngredients = ref(false)
+
+async function onIngredientsSaved() {
+  await refresh()
+  editingIngredients.value = false
+}
 
 function onUploaded() {
   mediaFailed.value = false
@@ -37,15 +44,15 @@ function onUploaded() {
 
     <p v-if="recipe && mediaFailed" class="notice" role="alert">{{ t('recipe.mediaFailed') }}</p>
 
-    <div v-if="notFound" class="message">
-      <h1 class="message-title">{{ t('recipe.notFound.title') }}</h1>
-      <p class="message-hint">{{ t('recipe.notFound.hint') }}</p>
+    <div v-if="notFound" class="state">
+      <h1 class="state-title">{{ t('recipe.notFound.title') }}</h1>
+      <p class="state-hint">{{ t('recipe.notFound.hint') }}</p>
     </div>
 
-    <div v-else-if="error || !recipe" class="message" role="alert">
-      <h1 class="message-title">{{ t('recipe.error.title') }}</h1>
-      <p class="message-hint">{{ t('recipes.error.hint') }}</p>
-      <button class="retry" type="button" :disabled="status === 'pending'" @click="refresh()">
+    <div v-else-if="error || !recipe" class="state" role="alert">
+      <h1 class="state-title">{{ t('recipe.error.title') }}</h1>
+      <p class="state-hint">{{ t('recipes.error.hint') }}</p>
+      <button class="button secondary" type="button" :disabled="status === 'pending'" @click="refresh()">
         {{ t('recipes.error.retry') }}
       </button>
     </div>
@@ -53,10 +60,10 @@ function onUploaded() {
     <!-- A recipe may only exist in another language, so it declares its own. -->
     <template v-else>
       <article :lang="recipe.locale">
-        <h1>{{ recipe.title }}</h1>
+        <h1 class="page-title">{{ recipe.title }}</h1>
         <p v-if="recipe.description" class="description">{{ recipe.description }}</p>
-        <ul v-if="recipeMeta(recipe).length" class="meta">
-          <li v-for="item in recipeMeta(recipe)" :key="item.key">
+        <ul v-if="meta.length" class="meta">
+          <li v-for="item in meta" :key="item.key">
             {{ t(item.key, { value: item.value }) }}
           </li>
         </ul>
@@ -68,14 +75,41 @@ function onUploaded() {
           :alt="t('recipe.imageAlt', { title: recipe.title, number: 1 })"
           :width="cover.width ?? undefined"
           :height="cover.height ?? undefined"
+          fetchpriority="high"
+          decoding="async"
         />
 
         <div class="body">
-          <section v-if="recipe.ingredients.length" class="ingredients">
-            <h2>{{ t('recipe.ingredients') }}</h2>
-            <ul>
+          <section class="ingredients" :class="{ editing: editingIngredients }">
+            <div class="section-head">
+              <h2>{{ t('recipe.ingredients') }}</h2>
+              <button
+                v-if="!editingIngredients"
+                class="edit"
+                type="button"
+                :aria-label="`${t('ingredients.edit')}: ${t('recipe.ingredients')}`"
+                @click="editingIngredients = true"
+              >
+                {{ t('ingredients.edit') }}
+              </button>
+            </div>
+            <!-- The editor's own text is in the app's language, not the recipe's. -->
+            <IngredientEditor
+              v-if="editingIngredients"
+              :lang="locale"
+              :slug="recipe.slug"
+              :recipe-locale="recipe.locale"
+              :title="recipe.title"
+              :servings="recipe.servings"
+              :ingredients="recipe.ingredients"
+              :steps="recipe.steps"
+              @saved="onIngredientsSaved"
+              @cancel="editingIngredients = false"
+            />
+            <ul v-else-if="recipe.ingredients.length">
               <li v-for="(ingredient, index) in recipe.ingredients" :key="index">{{ ingredient }}</li>
             </ul>
+            <p v-else class="empty" :lang="locale">{{ t('ingredients.empty') }}</p>
           </section>
 
           <section v-if="recipe.steps.length" class="steps">
@@ -96,6 +130,7 @@ function onUploaded() {
                 :width="image.width ?? undefined"
                 :height="image.height ?? undefined"
                 loading="lazy"
+                decoding="async"
               />
             </li>
           </ul>
@@ -118,39 +153,33 @@ function onUploaded() {
 
 <style scoped>
 .recipe-page {
-  padding: 2rem 0;
+  padding: 2rem 0 4rem;
 }
 
-.back {
-  color: var(--color-muted);
-  text-decoration: none;
-}
-
-h1 {
-  margin: 1rem 0 0.5rem;
-  font-size: clamp(1.5rem, 4vw, 2.25rem);
-  overflow-wrap: anywhere;
+.page-title {
+  margin: 1.25rem 0 0.5rem;
 }
 
 h2 {
-  margin: 0 0 0.75rem;
-  font-size: 1.25rem;
+  margin: 0 0 1rem;
+  font-size: 1.125rem;
 }
 
 article > section {
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
 
 .description {
+  max-width: 40rem;
   margin: 0 0 0.75rem;
   color: var(--color-muted);
+  font-size: 1.0625rem;
   overflow-wrap: anywhere;
 }
 
 .meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem 1rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -158,30 +187,94 @@ article > section {
   font-size: 0.875rem;
 }
 
+.meta li + li::before {
+  content: '·';
+  margin: 0 0.5rem;
+}
+
 .cover {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 28rem;
-  margin-top: 1.5rem;
-  border-radius: 12px;
+  max-height: 30rem;
+  margin-top: 1.75rem;
+  border-radius: var(--radius-large);
   object-fit: cover;
+  background: var(--color-subtle);
 }
 
 .body {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 2.5rem 3.5rem;
+  margin-top: 3rem;
 }
 
-.ingredients ul,
+/* The editor needs the full width; the steps move below it. */
+.ingredients.editing {
+  grid-column: 1 / -1;
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.edit {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-muted);
+  font: inherit;
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.edit:hover {
+  color: var(--color-text);
+}
+
+.empty {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.ingredients > ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-wrap: anywhere;
+}
+
+.ingredients > ul > li {
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.ingredients > ul > li:first-child {
+  padding-top: 0;
+}
+
 .steps ol {
   display: grid;
-  gap: 0.5rem;
+  gap: 1rem;
   margin: 0;
   padding-left: 1.25rem;
+  line-height: 1.6;
   overflow-wrap: anywhere;
+}
+
+.steps li::marker {
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.steps li {
+  padding-left: 0.35rem;
 }
 
 .gallery {
@@ -197,9 +290,10 @@ article > section {
   display: block;
   width: 100%;
   height: 100%;
-  border-radius: 12px;
+  border-radius: var(--radius);
   object-fit: cover;
   aspect-ratio: 4 / 3;
+  background: var(--color-subtle);
 }
 
 .videos {
@@ -211,44 +305,21 @@ article > section {
   display: block;
   width: 100%;
   max-height: 32rem;
-  border-radius: 12px;
+  border-radius: var(--radius-large);
   background: #000;
 }
 
 .notice {
-  margin: 1rem 0 0;
+  margin: 1.25rem 0 0;
   padding: 0.75rem 1rem;
-  border: 1px solid #b3261e;
-  border-radius: 8px;
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius);
+  color: var(--color-danger);
 }
 
-.message {
-  margin-top: 1rem;
-  padding: 3rem 1rem;
-  border: 1px dashed var(--color-border);
-  border-radius: 12px;
-  text-align: center;
-}
-
-.message-title {
-  margin: 0 0 0.25rem;
-  font-size: 1.125rem;
-}
-
-.message-hint {
-  margin: 0;
-  color: var(--color-muted);
-}
-
-.retry {
-  margin-top: 1rem;
-  padding: 0.6rem 1.1rem;
-  border: 0;
-  border-radius: 8px;
-  background: var(--color-text);
-  color: var(--color-bg);
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
+@media (max-width: 700px) {
+  .body {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
