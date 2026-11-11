@@ -8,7 +8,10 @@
     "tagline": "Przepisy, które naprawdę zrobisz jeszcze dziś wieczorem."
   },
   "nav": {
-    "recipes": "Przepisy"
+    "recipes": "Przepisy",
+    "login": "Zaloguj się",
+    "logout": "Wyloguj się",
+    "account": "Zalogowano jako {email}"
   },
   "recipes": {
     "title": "Przepisy",
@@ -82,6 +85,36 @@
     "error": {
       "invalid": "Niektóre pola są nieprawidłowe. Sprawdź je i spróbuj ponownie.",
       "generic": "Nie udało się zapisać przepisu. Spróbuj ponownie za chwilę."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Logowanie",
+      "submit": "Zaloguj się",
+      "submitting": "Logowanie…",
+      "switch": "Nie masz konta?",
+      "switchLink": "Załóż je"
+    },
+    "register": {
+      "title": "Załóż konto",
+      "submit": "Załóż konto",
+      "submitting": "Zakładanie konta…",
+      "switch": "Masz już konto?",
+      "switchLink": "Zaloguj się"
+    },
+    "fields": {
+      "email": "E-mail",
+      "password": "Hasło"
+    },
+    "hints": {
+      "password": "Co najmniej 8 znaków."
+    },
+    "error": {
+      "invalid": "Nieprawidłowy e-mail lub hasło.",
+      "taken": "Konto z tym adresem e-mail już istnieje.",
+      "invalidInput": "Sprawdź adres e-mail i użyj hasła o długości co najmniej 8 znaków.",
+      "tooMany": "Zbyt wiele prób. Odczekaj kilka minut i spróbuj ponownie.",
+      "generic": "Coś poszło nie tak. Spróbuj ponownie za chwilę."
     }
   }
 }

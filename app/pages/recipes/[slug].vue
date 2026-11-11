@@ -3,12 +3,11 @@ import type { RecipeDetail } from '~/types'
 
 const { t, locale } = useI18n()
 const localePath = useLocalePath()
-const config = useRuntimeConfig()
 const route = useRoute()
 
 const slug = encodeURIComponent(String(route.params.slug))
 const { data: recipe, error, status, refresh } = await useFetch<RecipeDetail>(`/recipes/${slug}`, {
-  baseURL: config.public.apiBase,
+  baseURL: '/api',
   query: { locale },
 })
 

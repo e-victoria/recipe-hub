@@ -9,6 +9,13 @@ Recipe Hub web app: Nuxt 4 (Vue 3), server-rendered, PWA, EN/RU/PL via `@nuxtjs/
 - Tests: `npm test` (Vitest, files in `test/`)
 - Production build: `npm run build`, then `node .output/server/index.mjs`
 
+## API and login
+
+- The browser never calls recipe-hub-api directly. Pages fetch `/api/...` on this site; `server/api/[...path].ts` forwards it to `NUXT_API_BASE` (server-only runtime config, default `http://localhost:8000`) with the user's token.
+- The token lives only in the `httpOnly` cookie `recipe-hub.session`, set by `server/api/auth/{login,register}.post.ts`. Page code never sees it; `useAuth()` exposes just the user.
+- `app/middleware/auth.global.ts` sends logged-out users to `/login?redirect=…`. Public pages are listed in `PUBLIC_PAGES` there; add a page to it only if it shows no user data.
+- After API changes, regenerate types with `npm run api:types` (needs the API running on port 8000).
+
 ## AI config
 
 Shared rules, skills and personas come from `recipe-hub-ai` (version pinned in `ai.json`). Don't edit the generated block below or `.claude/skills` / `.claude/agents` by hand; change them in `recipe-hub-ai` and run `python3 ../recipe-hub-ai/sync.py .`.

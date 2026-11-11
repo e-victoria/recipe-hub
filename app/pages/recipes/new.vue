@@ -3,7 +3,6 @@ import type { Locale, Recipe } from '~/types'
 
 const { t, locale, locales } = useI18n()
 const localePath = useLocalePath()
-const config = useRuntimeConfig()
 useHead({ title: () => `${t('recipeNew.title')} · ${t('app.name')}` })
 
 const form = reactive<RecipeFormValues>({
@@ -31,7 +30,7 @@ async function submit() {
   errorKey.value = null
   try {
     const recipe = await $fetch<Recipe>('/recipes', {
-      baseURL: config.public.apiBase,
+      baseURL: '/api',
       method: 'POST',
       body: buildRecipePayload(form),
     })

@@ -1,14 +1,27 @@
 <script setup lang="ts">
 const { locale, locales, setLocale, t } = useI18n()
 const localePath = useLocalePath()
+const { user, logout } = useAuth()
+
+async function onLogout() {
+  await logout()
+  await navigateTo(localePath('/login'))
+}
 </script>
 
 <template>
   <header class="topbar">
     <NuxtLink class="brand" :to="localePath('/')">{{ t('app.name') }}</NuxtLink>
     <nav class="nav">
-      <NuxtLink :to="localePath('/recipes')">{{ t('nav.recipes') }}</NuxtLink>
+      <NuxtLink v-if="user" :to="localePath('/recipes')">{{ t('nav.recipes') }}</NuxtLink>
     </nav>
+    <div class="account">
+      <template v-if="user">
+        <span class="email" :title="t('nav.account', { email: user.email })">{{ user.email }}</span>
+        <button class="link" type="button" @click="onLogout">{{ t('nav.logout') }}</button>
+      </template>
+      <NuxtLink v-else-if="user === null" class="link" :to="localePath('/login')">{{ t('nav.login') }}</NuxtLink>
+    </div>
     <label class="lang">
       <span class="visually-hidden">{{ t('app.language') }}</span>
       <select :value="locale" @change="setLocale(($event.target as HTMLSelectElement).value as typeof locale)">
@@ -47,6 +60,38 @@ const localePath = useLocalePath()
 .nav a.router-link-active {
   color: inherit;
   font-weight: 600;
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.email {
+  overflow: hidden;
+  max-width: 14rem;
+  color: var(--color-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .email {
+    display: none;
+  }
 }
 
 .lang select {

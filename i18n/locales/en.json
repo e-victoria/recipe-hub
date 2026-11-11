@@ -8,7 +8,10 @@
     "tagline": "Recipes you can actually make tonight."
   },
   "nav": {
-    "recipes": "Recipes"
+    "recipes": "Recipes",
+    "login": "Log in",
+    "logout": "Log out",
+    "account": "Logged in as {email}"
   },
   "recipes": {
     "title": "Recipes",
@@ -82,6 +85,36 @@
     "error": {
       "invalid": "Some fields are not valid. Check them and try again.",
       "generic": "Could not save the recipe. Try again in a moment."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Log in",
+      "submit": "Log in",
+      "submitting": "Logging in…",
+      "switch": "No account yet?",
+      "switchLink": "Create one"
+    },
+    "register": {
+      "title": "Create an account",
+      "submit": "Create account",
+      "submitting": "Creating…",
+      "switch": "Already have an account?",
+      "switchLink": "Log in"
+    },
+    "fields": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "hints": {
+      "password": "At least 8 characters."
+    },
+    "error": {
+      "invalid": "Wrong email or password.",
+      "taken": "An account with this email already exists.",
+      "invalidInput": "Check your email, and use a password of at least 8 characters.",
+      "tooMany": "Too many attempts. Wait a few minutes and try again.",
+      "generic": "Something went wrong. Try again in a moment."
     }
   }
 }

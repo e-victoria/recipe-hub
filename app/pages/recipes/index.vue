@@ -3,11 +3,10 @@ import type { RecipeSummary } from '~/types'
 
 const { t, locale } = useI18n()
 const localePath = useLocalePath()
-const config = useRuntimeConfig()
 useHead({ title: () => `${t('recipes.title')} · ${t('app.name')}` })
 
 const { data: recipes, error, status, refresh } = await useFetch<RecipeSummary[]>('/recipes', {
-  baseURL: config.public.apiBase,
+  baseURL: '/api',
   query: { locale },
 })
 </script>
